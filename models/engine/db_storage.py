@@ -24,6 +24,7 @@ class DBStorage:
                         os.environ['HBNB_MYSQL_HOST'],
                         os.environ['HBNB_MYSQL_DB'],
                         pool_pre_ping=True))
+        self.reload()
         __session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(__session)
         self.__session = Session()
