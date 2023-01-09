@@ -3,10 +3,10 @@
 from models.engine.file_storage import FileStorage
 from models.engine.db_storage import DBStorage
 import os
-
-if os.environ['HBNB_TYPE_STORAGE'] == 'db':
-    storage = DBStorage()
-else:
+try:
+    if os.environ['HBNB_TYPE_STORAGE'] == 'db':
+        storage = DBStorage()
+except Exception as UseFileStorage:
     storage = FileStorage()
 
 storage.reload()
