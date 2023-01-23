@@ -15,19 +15,23 @@ def do_deploy(archive_path):
     """distributes an archive to your web servers"""
     if os.path.exists(archive_path) is False:
         return False
-    with_ext = archive_path.split("/")[-1]
-    no_ext = with_ext.split(".")[0]
-    put(archive_path, "/tmp/{}".format(with_ext))
-    run("sudo rm -rf /data/web_static/releases/{}".format(no_ext))
-    run("sudo mkdir -p /data/web_static/releases/{}".format(no_ext))
-    run("sudo tar -xzf /tmp/{} -C /data/web_static/releases/{}".
-        format(with_ext, no_ext))
-    run("sudo rm /tmp/{}".format(with_ext))
-    run("sudo mv /data/web_static/releases/{}/web_static/* \
-            /data/web_static/releases/{}".format(no_ext, no_ext))
-    run("sudo rm -rf /data/web_static/releases/{}/web_static".format(no_ext))
-    run("sudo rm -rf /data/web_static/current")
-    run("sudo ln -s /data/web_static/releases/{} \
-            /data/web_static/current".format(no_ext))
-    print("New version deployed!")
-    return True
+    try:
+        with_ext = archive_path.split("/")[-1]
+        no_ext = with_ext.split(".")[0]
+        put(archive_path, "/tmp/{}".format(with_ext))
+        run("sudo rm -rf /data/web_static/releases/{}".format(no_ext))
+        run("sudo mkdir -p /data/web_static/releases/{}".format(no_ext))
+        run("sudo tar -xzf /tmp/{} -C /data/web_static/releases/{}".
+            format(with_ext, no_ext))
+        run("sudo rm /tmp/{}".format(with_ext))
+        run("sudo mv /data/web_static/releases/{}/web_static/* \
+             /data/web_static/releases/{}".format(no_ext, no_ext))
+        run("sudo rm -rf /data/web_static/releases/{}/web_static".
+            format(no_ext))
+        run("sudo rm -rf /data/web_static/current")
+        run("sudo ln -s /data/web_static/releases/{} \
+                /data/web_static/current".format(no_ext))
+        print("New version deployed!")
+        return True
+    except Exception as NotDeployed:
+        return False
