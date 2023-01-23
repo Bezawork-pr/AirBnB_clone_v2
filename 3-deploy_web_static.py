@@ -56,6 +56,7 @@ def do_deploy(archive_path):
 
 
 def deploy():
+    """creates and distributes an archive to your web servers"""
     create_tgz = do_pack()
     if create_tgz is None:
         return False
