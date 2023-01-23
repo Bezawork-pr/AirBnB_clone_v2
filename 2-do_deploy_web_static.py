@@ -6,6 +6,7 @@ from datetime import datetime
 from fabric.api import *
 import os.path
 
+
 def do_pack():
     """Generate a .tgz file"""
     try:
@@ -27,8 +28,8 @@ def do_deploy(archive_path):
 		no_ext, ext = file_name[1].split(".")
 		put(archive_path, "/tmp ")
 		run("mkdir -p /data/web_static/releases/{}".format(no_ext))
-		run("tar -xzf /tmp/{} -C /data/web_static/releases/{}".format(file_name, no_ext))
-		run("rm /tmp/{}".format(file_name))
+		run("tar -xzf /tmp/{} -C /data/web_static/releases/{}".format(file_name[1], no_ext))
+		run("rm /tmp/{}".format(file_name[1]))
 		run("mv /data/web_static/releases/{}/web_static/* data/web_static/releases/{}".format(no_ext, no_ext))
 		run("rm -rf /data/web_static/releases/{}/web_static".format(no_ext))
 		run("rm -rf /data/web_static/current")
