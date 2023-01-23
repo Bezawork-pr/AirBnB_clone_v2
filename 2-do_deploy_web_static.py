@@ -20,20 +20,18 @@ def do_pack():
         return None
 
 def do_deploy(archive_path):
-	"""distributes an archive to your web servers"""
-        if os.path.exists(archive_path) is False:
-            return False
-	try:
-                file_name = archive_path.split("/")
-		no_ext, ext = file_name[1].split(".")
-		put(archive_path, "/tmp ")
-		run("mkdir -p /data/web_static/releases/{}".format(no_ext))
-		run("tar -xzf /tmp/{} -C /data/web_static/releases/{}".format(file_name[1], no_ext))
-		run("rm /tmp/{}".format(file_name[1]))
-		run("mv /data/web_static/releases/{}/web_static/* data/web_static/releases/{}".format(no_ext, no_ext))
-		run("rm -rf /data/web_static/releases/{}/web_static".format(no_ext))
-		run("rm -rf /data/web_static/current")
-		run("ln -s /data/web_static/releases/{} /data/web_static/current".format(no_ext))
-		return True
-	except Exception as NotFound:
-		return False
+    """distributes an archive to your web servers"""
+    try:
+        file_name = archive_path.split("/")
+        no_ext, ext = file_name[1].split(".")
+        put(archive_path, "/tmp ")
+        run("mkdir -p /data/web_static/releases/{}".format(no_ext))
+        run("tar -xzf /tmp/{} -C /data/web_static/releases/{}".format(file_name[1], no_ext))
+        run("rm /tmp/{}".format(file_name[1]))
+        run("mv /data/web_static/releases/{}/web_static/* /data/web_static/releases/{}".format(no_ext, no_ext))
+        run("rm -rf /data/web_static/releases/{}/web_static".format(no_ext))
+        run("rm -rf /data/web_static/current")
+        run("ln -s /data/web_static/releases/{} /data/web_static/current".format(no_ext))
+        return True
+    except Exception as NotFound:
+        return False
