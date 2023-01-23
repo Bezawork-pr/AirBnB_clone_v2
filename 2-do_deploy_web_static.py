@@ -4,8 +4,7 @@ that distributes an archive to your web servers,
 using the function do_deploy:"""
 from datetime import datetime
 from fabric.api import *
-from os import path
-
+import os.path
 
 def do_pack():
     """Generate a .tgz file"""
@@ -21,7 +20,7 @@ def do_pack():
 
 def do_deploy(archive_path):
 	"""distributes an archive to your web servers"""
-        if path.exists(archive_path) is False:
+        if os.path.exists(archive_path) is False:
             return False
 	try:
                 file_name = archive_path.split("/")
