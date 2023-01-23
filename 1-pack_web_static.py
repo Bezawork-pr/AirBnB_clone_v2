@@ -12,8 +12,8 @@ def do_pack():
         current_time = datetime.now()
         format_date = current_time.strftime("%Y%m%d%H%M%S")
         local("mkdir -p versions")
-        path = "versions/web_static_{}.tgz .".format(format_date)
-        local("tar -c -f -z -v web_static".format(path))
+        path = "versions/web_static_{}.tgz".format(format_date)
+        local("tar -cvzf {} web_static".format(path))
         return path
     except Exception as NotCreated:
         return None
