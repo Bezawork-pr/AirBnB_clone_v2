@@ -14,5 +14,5 @@ mkdir -p /data/web_static/shared/
 echo "Holberton School" > /data/web_static/releases/test/index.html
 ln -s /data/web_static/releases/test/ /data/web_static/current
 sudo chown -R ubuntu:ubuntu /data
-sudo sed -i "54i \\\tlocation /htbn_static {\n\t\talias /data/web_static/current/;\n\t\tindex index.html index.htm;}" /etc/nginx/sites-available/default 
+sudo sed -i "40i \\\tlocation /htbn_static {\n\t\talias /data/web_static/current/;\n\t\tindex index.html index.htm;}" /etc/nginx/sites-available/default 
 sudo service nginx restart
