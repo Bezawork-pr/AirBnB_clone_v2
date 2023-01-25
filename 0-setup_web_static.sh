@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 #  a Bash script that sets up your web servers for the deployment of web_static
-apt-get update -y
-apt-get install -y nginx
+sudo apt-get -y update
+sudo apt-get-y upgrade
+sudo apt-get install -y nginx
 
 sudo echo "Hello World!" |  /var/www/html/index.nginx-debian.html
 sed -i "/server_name _;/ a\\\trewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default
