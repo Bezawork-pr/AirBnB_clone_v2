@@ -54,7 +54,7 @@ def number(n):
 def number_template(n):
     check = n.isdigit()
     if check is True:
-        return render_template('hello.html', n=n)
+        return render_template('5-number.html', n=n)
     abort(404)
 
 
