@@ -42,11 +42,12 @@ def python(text="is cool"):
     return 'Python %s' % escape(text)
 
 
-@app.route('/number/<int:n>', strict_slashes=False)
+@app.route('/number/<n>', strict_slashes=False)
 def number(n):
-    """display “n is a number” only if n is an integer"""
-    return 'n is a number'
-
+    check = n.isdigit()
+    if check is True:
+        return '%s is a number' % escape(n)
+    abort(404)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
