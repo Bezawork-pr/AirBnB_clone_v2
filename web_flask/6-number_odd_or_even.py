@@ -61,8 +61,12 @@ def number_template(n):
 @app.route('/number_odd_or_even/<n>', strict_slashes=False)
 def number_odd_or_even(n):
     check = n.isdigit()
+    filename = '6-number_odd_or_even.html'
+    even_odd = "even"
     if check is True:
-        return render_template('6-number_odd_or_even.html', n=n)
+        if int(n) % 2 != 0:
+            even_odd = "odd"
+        return render_template(filename, n=n, even_odd=even_odd)
     abort(404)
 
 
