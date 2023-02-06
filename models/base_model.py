@@ -34,6 +34,7 @@ class BaseModel:
                 kwargs['created_at'] = datetime.now()
             try:
                 del kwargs['__class__']
+                del kwargs['_sa_instance_state']
             except Exception as ifnotthere:
                 pass
             if not hasattr(kwargs, 'id'):

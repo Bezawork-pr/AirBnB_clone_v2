@@ -9,10 +9,10 @@ try:
 #except Exception as UseFileStorage:
 except Exception as Pass:
     pass
-try:
-    if os.environ['HBNB_TYPE_STORAGE'] == 'fs':
-        storage = FileStorage()
-except Exception as Pass:
-    pass
 
+try:
+    if os.environ['HBNB_TYPE_STORAGE'] != 'db':
+        storage = FileStorage()
+except Exception as BackUp:
+    storage = FileStorage()
 storage.reload()

@@ -11,6 +11,9 @@ from models.city import City
 """
 state_1 = State(name="California")
 print("New state: {}".format(state_1))
+print("----------------------------------")
+print("{}".format(type(state_1).__name__))
+print("----------------------------------") 
 state_1.save()
 state_2 = State(name="Arizona")
 print("New state: {}".format(state_2))
