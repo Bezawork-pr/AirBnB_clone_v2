@@ -37,8 +37,13 @@ class DBStorage:
                 for j in self.__session.query(i).all(): 
                     object_dict[i+"."+j.id] = j
         else:
-            for k in self.__session.query(eval(cls)).all(): 
-                objects_dict[cls+"."+k.id] = k
+            if type(cls) is str:
+                tocls = eval(cls)
+            else:
+                tocls = cls
+            for k in self.__session.query(tocls).all():
+            #for k in self.__session.query(cls).all():
+                objects_dict[str(cls)+"."+k.id] = k
         return objects_dict
 
     def new(self, obj):
@@ -60,4 +65,4 @@ class DBStorage:
         self.__session = Session()
 
     def close(self):
-        self.__session.remove()
+        self.__session.close()

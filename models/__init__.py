@@ -6,7 +6,13 @@ import os
 try:
     if os.environ['HBNB_TYPE_STORAGE'] == 'db':
         storage = DBStorage()
-except Exception as UseFileStorage:
-    storage = FileStorage()
+#except Exception as UseFileStorage:
+except Exception as Pass:
+    pass
+try:
+    if os.environ['HBNB_TYPE_STORAGE'] == 'fs':
+        storage = FileStorage()
+except Exception as Pass:
+    pass
 
 storage.reload()
