@@ -11,6 +11,7 @@ class State(BaseModel, Base):
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
     cities = relationship("City", backref="state")
+
 #City.states = relationship("State", order_by = State.id, back_populates = "city")
     if getenv("HBNB_TYPE_STORAGE") != "db":
         @property
@@ -22,4 +23,3 @@ class State(BaseModel, Base):
                 if cls.__name__ == "City":
                     cities.append(value)
             return cities
-
