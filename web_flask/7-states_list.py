@@ -16,13 +16,15 @@ app = Flask(__name__)
 
 @app.route('/states_list', strict_slashes=False)
 def render(states):
-    """Render HTML"""
+    """Render HTML
+    By fetching from 7-states_list.html
+    """
     return render_template('7-states_list.html', states=states)
 
 
 @app.teardown_appcontext
 def teardownapp(exc):
-    """Tear down"""
+    """Tear down current session"""
     storage.close()
 
 

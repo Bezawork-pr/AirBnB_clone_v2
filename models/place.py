@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-""" Place Module for HBNB project """
+""" Place Module for HBNB project 
+This file will create a table using sql alchemy"""
 from models.base_model import BaseModel
 from models.base_model import Base
 from sqlalchemy import Column, Integer, String, Float, Table
@@ -15,7 +16,9 @@ association_table = Table("place_amenity", Base.metadata,
 
 
 class Place(BaseModel, Base):
-    """ A place to stay """
+    """ A place to stay 
+    a table created with sql alchemy
+    """
     __tablename__="places"
     #id: Mapped[int] = mapped_column(primary_key=True)
     #children: Mapped[List[Amenity]] = relationship(secondary=association_table)
