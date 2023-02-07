@@ -16,11 +16,13 @@ app = Flask(__name__)
 
 @app.route('/states_list', strict_slashes=False)
 def render(states):
+    """Render HTML"""
     return render_template('7-states_list.html', states=states)
 
 
 @app.teardown_appcontext
 def teardownapp(exc):
+    """Tear down"""
     storage.close()
 
 
