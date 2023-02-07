@@ -18,6 +18,7 @@ class DBStorage:
     classes = ['User', 'State', 'City', 'Amenity', 'Place', 'Review']
 
     def __init__(self):
+        """Connect with Database"""
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
                         format(os.environ['HBNB_MYSQL_USER'],
                         os.environ['HBNB_MYSQL_PWD'],
@@ -31,6 +32,7 @@ class DBStorage:
             pass
 
     def all(self, cls=None):
+        """Return all objects"""
         objects_dict = {}
         if cls is None:
             for i in DBStorage.classes:
@@ -47,22 +49,27 @@ class DBStorage:
         return objects_dict
 
     def new(self, obj):
+        """New obj added to session"""
         self.__session.add(obj)
     
     def save(self):
+        """session commited"""
         self.__session.commit()
 
     def delete(self, obj=None):
+        """Delete obj from session"""
         try:
            self.__session.delete(obj)
         except Exception as error:
             pass
 
     def reload(self):
+        """Reload from Database"""
         Base.metadata.create_all(self.__engine)
         __session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(__session)
         self.__session = Session()
 
     def close(self):
+        """close session"""
         self.__session.close()
