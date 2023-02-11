@@ -7,8 +7,7 @@ from sqlalchemy import Column, Integer, String, Float, Table
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 from models.amenity import Amenity
-#from sqlalchemy.orm import Mapped
-#from sqlalchemy.orm import mapped_column
+from os import getenv
 
 association_table = Table("place_amenity", Base.metadata,
         Column("place_id", String(60), ForeignKey("places.id", ondelete="CASCADE", onupdate="CASCADE"), primary_key=True, nullable=False),
@@ -20,8 +19,6 @@ class Place(BaseModel, Base):
     a table created with sql alchemy
     """
     __tablename__="places"
-    #id: Mapped[int] = mapped_column(primary_key=True)
-    #children: Mapped[List[Amenity]] = relationship(secondary=association_table)
     city_id = Column(String(60), ForeignKey('cities.id', ondelete='CASCADE'),
                     nullable=False)
     user_id = Column(String(60), ForeignKey('users.id', ondelete='CASCADE'),
@@ -35,5 +32,30 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     reviews = relationship('Review', backref="places")
-    amenities = relationship('Amenity', secondary='place_amenity', back_populates="places", viewonly=False)
+    amenities = relationship('Amenity', secondary='place_amenity', back_populates="place_amenities", viewonly=False)
+    #amenities = relationship('Amenity', secondary='place_amenity', viewonly=False)
 
+    if getenv("HBNB_TYPE_STORAGE", None) != "db":
+        @property
+        def reviews(self):
+            "Getter"
+            list_review = []
+            for review in list(models.storage.all(Review).values()):
+                if review.place_id == self.id:
+                    list_review.append(review)
+            return list_review
+
+        @property
+        def amenities(self):
+            "Getter"
+            list_amenities = [] 
+            for amenity in list(models.storage.all(Amenity).values()):
+                if amenity.id in self.amenity_ids:
+                    list_amenity.append(amenity)
+            return list_amenities
+        
+        @amenities.setter
+        def amenities(self, value):
+            "Setter"
+            if type(value) == "Amenity":
+                self.amenity_ids.append(value.id)
