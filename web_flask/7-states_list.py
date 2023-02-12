@@ -9,16 +9,18 @@ Routes:
         UL tag: with the list of all State objects present in DBStorage
         LI tag: description of one State: <state.id>: <B><state.name></B>
 """
-import models
 from flask import Flask, escape, render_template
-states = models.storage.all("State")
+from models import storage
+
 app = Flask(__name__)
 
+
 @app.route('/states_list', strict_slashes=False)
-def render(states):
+def render():
     """Render HTML
     By fetching from 7-states_list.html
     """
+    states = storage.all('State')
     return render_template('7-states_list.html', states=states)
 
 
